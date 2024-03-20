@@ -1,21 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Vehiculo } from '../utilitarios/modelos/Vehiculo';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehiculoService {
 
-constructor() { }
+constructor(private http: HttpClient) { }
+baseUrl = "http://www.epico.gob.ec/vehiculo/public/api/";
 
-getvehiculos(filtro:any): Observable<Array<Vehiculo>> {
+
+
+/*  getvehiculos(filtro:any): Observable<Array<Vehiculo>> {
   const escucha: Observable<Array<Vehiculo>> = new Observable(escuchando => {
     let lista = this.listaVehiculos.filter(elem => elem.marca.toLowerCase().includes(filtro.toLowerCase()));
     escuchando.next(lista); 
    });
 
   return escucha;
+}  */
+
+getvehiculos(): Observable<Vehiculo[]>{
+  return this.http.get<Respuesta>(this.baseUrl+"vehiculos/").pipe(
+    map(respuesta => {
+      /* let lista: Array<Vehiculo>= [];
+      respuesta.data.array.forEach(element => {
+        lista.push({codigo: element.codigo, marca: element.marca,modelo: element.modelo});
+        
+      });  */
+      return respuesta.data;})
+  );
 }
 
 getVehiculo(codigo:string): Observable<Vehiculo|undefined>{
@@ -44,4 +60,22 @@ private  listaVehiculos : Array<Vehiculo> = [
 
 }
 
+ /* export interface Vehiculo{
+  codigo: string;
+  marca: string;
+  color?: string;
+  modelo?: string;
+  kilometraje?: string;
+  precio?: number;
+  foto?: string| null;
+  anio?: number;
+  calificacion?: number;
+}  */
+
+export interface Respuesta {
+  codigo: string;
+  mensaje: string;
+  data: any;
+ /*  data: Array<Vehiculo>;  */
+}
 

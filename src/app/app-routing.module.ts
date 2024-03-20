@@ -13,14 +13,18 @@ const routes: Routes = [
   {
     path: "vehiculos",
     component: PagListaVehiculosComponent
+  
   },
   {
     path: "vehiculo",
     component: PagVehiculoRegistroComponent
+  
+    
   },
   {
     path: "vehiculo/:codigo",
     component: PagVehiculoComponent
+  
   },
 
 

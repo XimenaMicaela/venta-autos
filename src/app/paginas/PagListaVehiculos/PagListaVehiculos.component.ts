@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { VehiculoService } from '../../servicios/Vehiculo.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Vehiculo } from '../../utilitarios/modelos/Vehiculo';
 
 @Component({
   selector: 'app-PagListaVehiculos',
@@ -8,44 +9,48 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./PagListaVehiculos.component.css']
 })
 export class PagListaVehiculosComponent implements OnInit {
-  mostrarImagen = true;
+  constructor(
+    private vehiculoService: VehiculoService,
+  ) { }
+   public mostrarImagen = false;
+   public listaVehiculos : Array<Vehiculo> = [];
   //filtro: string ="";
   private _filtro: string = '';
   get filtro(){
-    return this._filtro
+    return this._filtro;
   }
 
-  set filtro(data: string){
-    this._filtro = data;
-    this.consultaVehiculos();
+  set filtro(filtro: string){
+    this._filtro = filtro;
+    /* this.consultaVehiculos(); */
 
   }
 
-  @Input() valor: string = '';
-  listaVehiculos: Array<any>= [];
+ /*  @Input() valor: string = '';
+  listaVehiculos: Array<any>= []; */
 
-  constructor(
-    private vehiculoService: VehiculoService,
-  ) { 
 
-  
-  }
-
-  
   ngOnInit() { 
-    this.consultaVehiculos();
+   /*  this.consultaVehiculos(); */
+   console.log('Ingreso a ejecutarse');
+   /* this.listaVehiculos = this.vehiculoService.getvehiculos(); */
+   this.vehiculoService.getvehiculos().subscribe(respuesta =>{
+    console.log(respuesta );
+    this.listaVehiculos = respuesta;
+   });
   }
-  mostrar(){
-    this.mostrarImagen = !this.mostrarImagen
-  }
+   mostrar(){
+    this.mostrarImagen = !this.mostrarImagen}
+ 
 
-  consultaVehiculos(){
+ /*  consultaVehiculos(){
     this.vehiculoService.getvehiculos(this.filtro).subscribe(data =>{
       this.listaVehiculos = data;
 
     });
 
   }
+   */
   recepcion(dato: number){
     console.log('Dato:',dato);
   }
