@@ -17,7 +17,7 @@ export class PagVehiculoRegistroComponent implements OnInit {
   ) {
  
     this.formulario = this.formBuilder.group({
-      "codigo": [],
+      "codigo": ['', [Validators.required]],
       "marca": [],
       "modelo":[],
       "anio":[],
@@ -35,7 +35,6 @@ export class PagVehiculoRegistroComponent implements OnInit {
   guardar(){
     let vehiculo: Vehiculo = {...this.formulario.value};
     this.vehiculoServicio.addvehiculo(vehiculo);
-    console.log('Grabado con exito');
     console.log('Formulario' , this.formulario.value);
   }
 
