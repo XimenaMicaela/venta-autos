@@ -34,7 +34,7 @@ export class PagListaVehiculosComponent implements OnInit {
    /*  this.consultaVehiculos(); */
    console.log('Ingreso a ejecutarse');
    /* this.listaVehiculos = this.vehiculoService.getvehiculos(); */
-   this.vehiculoService.getvehiculos().subscribe(respuesta =>{
+   this.vehiculoService.getVehiculos().subscribe(respuesta =>{
     console.log(respuesta );
     this.listaVehiculos = respuesta;
    });

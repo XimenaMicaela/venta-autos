@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Vehiculo } from '../../utilitarios/modelos/Vehiculo';
 import { VehiculoService } from '../../servicios/Vehiculo.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-PagVehiculoRegistro',
@@ -11,23 +12,20 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn,
 export class PagVehiculoRegistroComponent implements OnInit {
   formulario: FormGroup;
   constructor(
-   private vehiculoServicio: VehiculoService,
+   private vehiculoService: VehiculoService,
     private formBuilder: FormBuilder
   ) {
  
     this.formulario = this.formBuilder.group({
       "codigo": ['', [Validators.required, validadorCodigo()]],
-      "codigo_confirm": [],
       "marca": ['', [Validators.required]],
       "modelo":['', [Validators.required]],
-      "anio":[],
+      "anio":['', [Validators.required]],
       "color":[],
       "kilometraje": [],
       "Precio":[],
-      "calificacion": []
+      "calificacion": ['', [Validators.required]]
 
-    },{
-      validators: validadorCodigoComparativo()
     });
    }
 
@@ -35,13 +33,35 @@ export class PagVehiculoRegistroComponent implements OnInit {
   }
 
   guardar(){
-    let vehiculo: Vehiculo = {...this.formulario.value};
+    /* let vehiculo: Vehiculo = {...this.formulario.value};
     this.vehiculoServicio.addvehiculo(vehiculo);
-    console.log('Formulario' , this.formulario);
+    console.log('Formulario' , this.formulario); */
     if(this.formulario.valid){
-      alert(('Grabado con exito'));
+      this.vehiculoService.insertVehiculo({...this.formulario.value}).subscribe(
+        respuesta => {
+          if(respuesta.codigo == '1'){
+            Swal.fire ({
+              title: "Mensaje",
+              text: "Vehiculo registrado con exito",
+              icon: "success"
+          });
+        }else{
+          Swal.fire ({
+            title: "Mensaje",
+            text: "NO se pudo registrar el vehiculo"+ respuesta.mensaje,
+            icon: "error"
+        });
+          
+        }
+      }
+      );
+      
     }else{
-      alert(('Te faltan campos por llenar'));
+      Swal.fire ({
+        title: "Mensaje",
+        text: "Faltan llenar campos",
+        icon: "error"
+      });
     }
   }
 }

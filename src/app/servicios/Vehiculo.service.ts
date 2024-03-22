@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Vehiculo } from '../utilitarios/modelos/Vehiculo';
 import { Observable, map } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,11 @@ export class VehiculoService {
 constructor(private http: HttpClient) { }
 baseUrl = "http://www.epico.gob.ec/vehiculo/public/api/";
 
+// Todos vehiculos => GET vehiculos/
+//Insert => POST vehiculo/
+//Update => PUT vehiculo/
+// Delete => DELETE vehiculo/:codigo
+// Consulta => GET vehiculo/codigo
 
 
 /*  getvehiculos(filtro:any): Observable<Array<Vehiculo>> {
@@ -22,16 +27,25 @@ baseUrl = "http://www.epico.gob.ec/vehiculo/public/api/";
   return escucha;
 }  */
 
-getvehiculos(): Observable<Vehiculo[]>{
+getVehiculos(): Observable<Vehiculo[]>{
   return this.http.get<Respuesta>(this.baseUrl+"vehiculos/").pipe(
-    map(respuesta => {
-      /* let lista: Array<Vehiculo>= [];
-      respuesta.data.array.forEach(element => {
-        lista.push({codigo: element.codigo, marca: element.marca,modelo: element.modelo});
-        
-      });  */
-      return respuesta.data;})
+    map(respuesta => respuesta.data )
   );
+}
+
+insertVehiculo(vehiculos: Vehiculo){
+  let HttpOptions = {
+    headers: new HttpHeaders({'Content-type':'aplication/json'})
+  };
+ /*  let body = new HttpParams();
+  body = vehiculos.codigo ? body.set('codigo', vehiculos.codigo): body;
+  body = vehiculos.marca ? body.set('marca', vehiculos.marca): body;
+  body = vehiculos.modelo ? body.set('modelo', vehiculos.modelo): body;
+  body = vehiculos.anio ? body.set('anio', vehiculos.anio): body;
+  body = vehiculos.calificacion ? body.set('calificacion', vehiculos.calificacion): body;
+  body = vehiculos.foto ? body.set('foto', vehiculos.foto): body; */
+  return this.http.post<Respuesta>(this.baseUrl+"vehiculo/", vehiculos,HttpOptions);
+
 }
 
 getVehiculo(codigo:string): Observable<Vehiculo|undefined>{
@@ -75,7 +89,7 @@ private  listaVehiculos : Array<Vehiculo> = [
 export interface Respuesta {
   codigo: string;
   mensaje: string;
-  data: any;
- /*  data: Array<Vehiculo>;  */
+  /* data: any;  */
+  data: Array<Vehiculo>|Vehiculo| any;   
 }
 
