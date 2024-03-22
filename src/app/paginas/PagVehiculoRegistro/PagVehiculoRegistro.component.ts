@@ -12,8 +12,8 @@ import Swal from 'sweetalert2';
 export class PagVehiculoRegistroComponent implements OnInit {
   formulario: FormGroup;
   constructor(
-   private vehiculoService: VehiculoService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private vehiculoService: VehiculoService,
   ) {
  
     this.formulario = this.formBuilder.group({
@@ -22,7 +22,7 @@ export class PagVehiculoRegistroComponent implements OnInit {
       "modelo":['', [Validators.required]],
       "anio":['', [Validators.required]],
       "color":[],
-      "kilometraje": [],
+      "kilometraje": ['', [Validators.required]],
       "Precio":[],
       "calificacion": ['', [Validators.required]]
 
@@ -44,16 +44,18 @@ export class PagVehiculoRegistroComponent implements OnInit {
               title: "Mensaje",
               text: "Vehiculo registrado con exito",
               icon: "success"
-          });
-        }else{
+          }).then(res =>{
+            this.formulario.reset();
+          })
+          }else{
           Swal.fire ({
             title: "Mensaje",
             text: "NO se pudo registrar el vehiculo"+ respuesta.mensaje,
             icon: "error"
-        });
+          });
           
+          }
         }
-      }
       );
       
     }else{
