@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Vehiculo } from '../../utilitarios/modelos/Vehiculo';
+/* import { Vehiculo } from '../../utilitarios/modelos/Vehiculo'; */
 import { VehiculoService } from '../../servicios/Vehiculo.service';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { validadorCodigo } from '../../validaciones/VehiculoValidaciones';
 
 @Component({
   selector: 'app-PagVehiculoRegistro',
@@ -11,55 +12,59 @@ import Swal from 'sweetalert2';
 })
 export class PagVehiculoRegistroComponent implements OnInit {
   formulario: FormGroup;
+  
   constructor(
     private formBuilder: FormBuilder,
     private vehiculoService: VehiculoService,
+    
+    
   ) {
- 
+
     this.formulario = this.formBuilder.group({
       "codigo": ['', [Validators.required, validadorCodigo()]],
       "marca": ['', [Validators.required]],
-      "modelo":['', [Validators.required]],
-      "anio":['', [Validators.required]],
-      "color":[],
+      "modelo": ['', [Validators.required]],
+      "anio": ['', [Validators.required]],
+      "color": [],
       "kilometraje": ['', [Validators.required]],
-      "Precio":[],
+      "Precio": [],
       "calificacion": ['', [Validators.required]]
 
     });
-   }
-
-  ngOnInit() {
   }
 
-  guardar(){
+  ngOnInit() {
+   
+  }
+
+  guardar() {
     /* let vehiculo: Vehiculo = {...this.formulario.value};
     this.vehiculoServicio.addvehiculo(vehiculo);
     console.log('Formulario' , this.formulario); */
-    if(this.formulario.valid){
-      this.vehiculoService.insertVehiculo({...this.formulario.value}).subscribe(
+    if (this.formulario.valid) {
+      this.vehiculoService.insertVehiculo({ ...this.formulario.value }).subscribe(
         respuesta => {
-          if(respuesta.codigo == '1'){
-            Swal.fire ({
+          if (respuesta.codigo == '1') {
+            Swal.fire({
               title: "Mensaje",
               text: "Vehiculo registrado con exito",
               icon: "success"
-          }).then(res =>{
-            this.formulario.reset();
-          })
-          }else{
-          Swal.fire ({
-            title: "Mensaje",
-            text: "NO se pudo registrar el vehiculo"+ respuesta.mensaje,
-            icon: "error"
-          });
-          
+            }).then(res => {
+              this.formulario.reset();
+            })
+          } else {
+            Swal.fire({
+              title: "Mensaje",
+              text: "No se pudo registrar el vehiculo:" + respuesta.mensaje,
+              icon: "error"
+            });
+
           }
         }
       );
-      
-    }else{
-      Swal.fire ({
+
+    } else {
+      Swal.fire({
         title: "Mensaje",
         text: "Faltan llenar campos",
         icon: "error"
@@ -68,26 +73,26 @@ export class PagVehiculoRegistroComponent implements OnInit {
   }
 }
 
-export function validadorCodigo(): ValidatorFn{
-  return (control: AbstractControl): ValidationErrors|null=>{
+/* export function validadorCodigo(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
     const codigoV = /^[A-Z]\d{4}$/;
-    let value= control.value
-    if (codigoV.test(value)){
+    let value = control.value
+    if (codigoV.test(value)) {
       return null;
     }
-    return {'codigoValidate': true};
-   
+    return { 'codigoValidate': true };
+
   }
-  }
-  export function validadorCodigoComparativo(){
-    return (formulario: FormGroup): ValidationErrors|null=>{
-      let valor = formulario.controls['codigo'].value;
-      let valor2 = formulario.controls['codigo_confirm'].value;
-      if(valor === valor2){
-        return null;
-      }
-      return {'codigo comparativo': true};
+} */
+export function validadorCodigoComparativo() {
+  return (formulario: FormGroup): ValidationErrors | null => {
+    let valor = formulario.controls['codigo'].value;
+    let valor2 = formulario.controls['codigo_confirm'].value;
+    if (valor === valor2) {
+      return null;
     }
-    
+    return { 'codigo comparativo': true };
   }
+
+}
 

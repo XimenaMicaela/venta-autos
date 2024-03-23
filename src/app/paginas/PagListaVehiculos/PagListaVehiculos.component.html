@@ -6,7 +6,7 @@
     <div class="row">
       <div class="mb-3">
         <label for="exampleFormControlInput1" class="form-label">Filtro</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Marca" 
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Placa/Marca/Nombre" 
         [(ngModel)]="filtro" >
       </div>
     </div>
@@ -16,15 +16,16 @@
       </div>
 
     </div>
+    <br>
     <!-- <div class="row">
       <div class="col-12">
         FILTRADO POR: {{filtro}}
       </div>
     </div> -->
     <div class="row">
-      <div class="col-2">
+      <!-- <div class="col-2">
         <a [routerLink]="['/vehiculo']" class="btn btn-info">NUEVO </a>
-      </div>
+      </div> -->
     </div>
     <br>
     <div class="row">
@@ -33,15 +34,14 @@
           <thead>
             <tr>
               <th>
-                <button class="btn btn-sm" 
-                [ngClass]="{'btn-btn-warning': mostrarImagen, 'btn-warning': !mostrarImagen}"
-                (click)="mostrar()" [innerText]="mostrarImagen? 'Mostrar Imagen': 'ocultar Imagen'"></button> 
+                <button class="btn btn-sm" (click)="this.mostrarImagen = !this.mostrarImagen"
+                [ngClass]="{'btn-btn-warning': this.mostrarImagen , 'btn-info': !this.mostrarImagen}"
+                [innerText]="mostrarImagen? 'Ocultar Imagen': 'Mostrar Imagen'"></button> 
               </th>
               <th>CODIGO</th>
               <th>MARCA</th>
               <th>MODELO</th>
               <th>AÑO</th>
-              <th>COLOR</th>
               <th>KILOMETRAJE</th>
               <th>PRECIO</th>
               <th>CALIFICACION</th>
@@ -56,7 +56,7 @@
               <td >{{item.marca}}</td>
               <td>{{item.modelo | lowercase | aEspacio:'-'}}</td>
               <td [innerText]="item.anio">2023</td>
-              <td>{{item.color}}</td>
+              <!-- <td>{{item.color}}</td> -->
               <td>{{item.kilometraje}}</td>
               <td>{{item.precio | currency}}</td>
               <td>
