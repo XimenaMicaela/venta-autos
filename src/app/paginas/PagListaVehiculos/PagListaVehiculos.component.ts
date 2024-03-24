@@ -33,12 +33,9 @@ export class PagListaVehiculosComponent implements OnInit {
 
   ngOnInit() { 
    /*  this.consultaVehiculos(); */
-   console.log('FUNCIONANDO');
+   console.log('Ingreso a ejecutarse');
+   this.consultarVehiculos();
    /* this.listaVehiculos = this.vehiculoService.getvehiculos(); */
-   this.vehiculoService.getVehiculos().subscribe(respuesta =>{
-    console.log(respuesta );
-    this.listaVehiculos = respuesta;
-   });
   }
    mostrar(){
     this.mostrarImagen = !this.mostrarImagen}
@@ -56,16 +53,26 @@ export class PagListaVehiculosComponent implements OnInit {
     console.log('Dato:',dato);
   }
 
+  consultarVehiculos(){
+    this.vehiculoService.getVehiculos().subscribe(respuesta =>{
+      console.log(respuesta );
+      this.listaVehiculos = respuesta;
+     });
+
+  }
+
   eliminar(codigo: string){
     Swal.fire({
       title: "Estas seguro que deseas eliminar este registro?",
       showCancelButton: true,
       confirmButtonText: "Si",
-      cancelButtonText: "No"
+      cancelButtonText: "No",
+      icon: "question"
     }).then((res)=>{
       if(res.isConfirmed){
         this.vehiculoService.eliminarVehiculo(codigo).subscribe(data =>{
           if (data.codigo == '1'){
+            this.consultarVehiculos();
             Swal.fire({
               title: "Mensaje",
               text: "Vehiculo eliminado con exito",
