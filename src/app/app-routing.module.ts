@@ -4,6 +4,8 @@ import { HomeComponent } from './paginas/home/home.component';
 import { PagListaVehiculosComponent } from './paginas/PagListaVehiculos/PagListaVehiculos.component';
 import { PagVehiculoComponent } from './paginas/PagVehiculo/PagVehiculo.component';
 import { PagVehiculoRegistroComponent } from './paginas/PagVehiculoRegistro/PagVehiculoRegistro.component';
+import { PagClientesComponent } from './PagClientes/PagClientes.component';
+
 
 const routes: Routes = [
   {
@@ -13,18 +15,24 @@ const routes: Routes = [
   {
     path: "vehiculos",
     component: PagListaVehiculosComponent
-  
+
   },
+
+  {
+    path: "clientes",
+    component: PagClientesComponent
+  },
+
   {
     path: "vehiculo",
     component: PagVehiculoRegistroComponent
-  
-    
+
+
   },
   {
     path: "vehiculo/:codigo",
     component: PagVehiculoComponent
-  
+
   },
 
 
@@ -38,7 +46,9 @@ const routes: Routes = [
     component: HomeComponent,
     pathMatch: 'full'
   }
-  
+
+
+
 ];
 
 @NgModule({
