@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { VehiculoService } from '../../servicios/Vehiculo.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Vehiculo } from '../../utilitarios/modelos/Vehiculo';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-PagListaVehiculos',
@@ -32,7 +33,7 @@ export class PagListaVehiculosComponent implements OnInit {
 
   ngOnInit() { 
    /*  this.consultaVehiculos(); */
-   console.log('Ingreso a ejecutarse');
+   console.log('FUNCIONANDO');
    /* this.listaVehiculos = this.vehiculoService.getvehiculos(); */
    this.vehiculoService.getVehiculos().subscribe(respuesta =>{
     console.log(respuesta );
@@ -55,5 +56,25 @@ export class PagListaVehiculosComponent implements OnInit {
     console.log('Dato:',dato);
   }
 
- 
+  eliminar(codigo: string){
+    Swal.fire({
+      title: "Estas seguro que deseas eliminar este registro?",
+      showCancelButton: true,
+      confirmButtonText: "Si",
+      cancelButtonText: "No"
+    }).then((res)=>{
+      if(res.isConfirmed){
+        this.vehiculoService.eliminarVehiculo(codigo).subscribe(data =>{
+          if (data.codigo == '1'){
+            Swal.fire({
+              title: "Mensaje",
+              text: "Vehiculo eliminado con exito",
+              icon: "success"
+            });
+
+          }
+        });
+      }
+    });
+  }
 }

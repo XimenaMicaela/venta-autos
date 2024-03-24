@@ -10,7 +10,7 @@ export class VehiculoService {
 
   constructor(private http: HttpClient) { }
   baseUrl = "https://www.epico.gob.ec/vehiculo/public/api/";
-  httpOptions = {
+  HttpOptions = {
     headers: new HttpHeaders({ 'Content-type': 'aplication/json' })
   };
 
@@ -46,7 +46,7 @@ export class VehiculoService {
      body = vehiculos.anio ? body.set('anio', vehiculos.anio): body;
      body = vehiculos.calificacion ? body.set('calificacion', vehiculos.calificacion): body;
      body = vehiculos.foto ? body.set('foto', vehiculos.foto): body; */
-    return this.http.post<Respuesta>(this.baseUrl + "vehiculo/", vehiculo, this.httpOptions);
+    return this.http.post<Respuesta>(this.baseUrl + "vehiculo/", vehiculo, this.HttpOptions);
 
   }
 
@@ -55,8 +55,12 @@ export class VehiculoService {
   }
 
   actualizarVehiculo(vehiculo: Vehiculo, codigo: string) {
-    return this.http.put<Respuesta>(this.baseUrl + "vehiculo/" + codigo, vehiculo, this.httpOptions)
+    return this.http.put<Respuesta>(this.baseUrl + "vehiculo/" + codigo, vehiculo, this.HttpOptions);
 
+  }
+  
+  eliminarVehiculo(codigo: string){
+    return this.http.delete<Respuesta>(this.baseUrl + "vehiculo/" + codigo);
   }
 
   /* getVehiculo(codigo:string): Observable<Vehiculo|undefined>{

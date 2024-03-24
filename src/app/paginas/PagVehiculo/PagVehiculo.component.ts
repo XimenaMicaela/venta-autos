@@ -51,9 +51,9 @@ export class PagVehiculoComponent implements OnInit {
           this.formulario.controls['calificacion'].setValue(this.vehiculo?.calificacion);
           this.formulario.controls['kilometraje'].setValue(this.vehiculo?.kilometraje);
 
-        }else{
+        } else {
           Swal.fire({
-            title:"Mensaje de alerta",
+            title: "Mensaje de alerta",
             text: "No se pudo cargar la informacion",
             icon: "error",
 
@@ -68,36 +68,36 @@ export class PagVehiculoComponent implements OnInit {
   };
 
 
-guardar(){
-  if(this.formulario.valid){
-    let codigo =  this.vehiculo?.codigo;
-    this.vehiculoService.actualizarVehiculo({...this.formulario.value}, this.formulario.controls['codigo'].value).subscribe(data =>{
-      if(data.codigo == '1'){
-        Swal.fire(
-          {
-            title: "Mensaje",
-            text: "vehiculo actualizado con exito",
-            icon: "info"
-          }
-        );
-      }
+  guardar() {
+    if (this.formulario.valid) {
+      let codigo = this.vehiculo?.codigo;
+      this.vehiculoService.actualizarVehiculo({ ...this.formulario.value }, this.formulario.controls['codigo'].value).subscribe(data => {
+        if (data.codigo == '1') {
+          Swal.fire(
+            {
+              title: "Mensaje",
+              text: "vehiculo actualizado con exito",
+              icon: "info"
+            }
+          );
+        }
 
-    });
-  }else{
-    Swal.fire(
-      {
-        title: "Mensaje",
-        text: "faltan llenar campos",
-        icon: "error"
-      }
-    );
+      });
+    } else {
+      Swal.fire(
+        {
+          title: "Mensaje",
+          text: "faltan llenar campos",
+          icon: "error"
+        }
+      );
+
+    }
 
   }
 
-}
-
-imprimir(data: any){
-  console.log('Calificacion:', data)
-}
+  imprimir(data: any) {
+    console.log('Calificacion:', data)
+  }
 
 }
