@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class VehiculoService {
 
   constructor(private http: HttpClient) { }
-  baseUrl = "https://www.epico.gob.ec/vehiculo/public/api/";
+  baseUrl = "http://epico.gob.ec/vehiculo/public/api/";
   HttpOptions = {
     headers: new HttpHeaders({ 'Content-type': 'aplication/json' })
   };
@@ -31,10 +31,15 @@ export class VehiculoService {
     return escucha;
   }  */
 
-  getVehiculos(): Observable<Vehiculo[]> {
-    return this.http.get<Respuesta>(this.baseUrl + "vehiculos/").pipe(
+  getVehiculos(filtro?: string, rows?: number, page?: number): Observable<Respuesta> {
+    let body = new HttpParams();
+     body =filtro ? body.set('filtro', filtro): body;
+     body = rows? body.set('rows', rows): body;
+     body = page ? body.set('page', page): body;
+    /* return this.http.get<Respuesta>(this.baseUrl + "vehiculos/", {params: body}).pipe(
       map(respuesta => respuesta.data)
-    );
+    ); */
+    return this.http.get<Respuesta>(this.baseUrl + "vehiculos/", {params: body});
   }
 
   insertVehiculo(vehiculo: Vehiculo) {
@@ -73,6 +78,8 @@ export class VehiculoService {
    
     return escucha;
   } */
+
+  
   addvehiculo(vehiculo: Vehiculo) {
     this.listaVehiculos.push(vehiculo);
 
@@ -106,5 +113,9 @@ export interface Respuesta {
   mensaje: string;
   /* data: any;  */
   data: Array<Vehiculo> | Vehiculo | any;
+  rows: number;
+  pages: number;
+  records: number;
+  page: number
 }
 
