@@ -4,6 +4,7 @@ import { HomeComponent } from './paginas/home/home.component';
 import { PagListaVehiculosComponent } from './paginas/PagListaVehiculos/PagListaVehiculos.component';
 import { PagVehiculoComponent } from './paginas/PagVehiculo/PagVehiculo.component';
 import { PagVehiculoRegistroComponent } from './paginas/PagVehiculoRegistro/PagVehiculoRegistro.component';
+import { ClientesComponent } from './paginas/clientes/clientes.component';
 
 
 
@@ -25,12 +26,11 @@ const routes: Routes = [
 
   },
 
+  {
+    path: "clientes",
+    component: ClientesComponent
 
-
-
-
-
-  
+  },
 
   {
     path: "vehiculo",

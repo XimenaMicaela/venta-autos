@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { PaginaModule } from './paginas/PaginaModule';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UserInterceptorService } from './interceptores/UserInterceptor.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
