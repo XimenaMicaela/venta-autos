@@ -4,7 +4,9 @@ import { HomeComponent } from './paginas/home/home.component';
 import { PagListaVehiculosComponent } from './paginas/PagListaVehiculos/PagListaVehiculos.component';
 import { PagVehiculoComponent } from './paginas/PagVehiculo/PagVehiculo.component';
 import { PagVehiculoRegistroComponent } from './paginas/PagVehiculoRegistro/PagVehiculoRegistro.component';
-import { ClientesComponent } from './paginas/Clientes/Clientes.component';
+
+
+
 
 
 const routes: Routes = [
@@ -17,16 +19,19 @@ const routes: Routes = [
     component: PagListaVehiculosComponent
 
   },
-
   {
-    path: "Clientes",
-    component:ClientesComponent
-    
+    path: "vehiculos",
+    component: PagListaVehiculosComponent
 
   },
 
 
- 
+
+
+
+
+  
+
   {
     path: "vehiculo",
     component: PagVehiculoRegistroComponent
@@ -38,6 +43,8 @@ const routes: Routes = [
     component: PagVehiculoComponent
 
   },
+
+
 
 
   {
