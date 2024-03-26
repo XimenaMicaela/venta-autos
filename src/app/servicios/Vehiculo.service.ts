@@ -9,10 +9,11 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 export class VehiculoService {
 
   constructor(private http: HttpClient) { }
-  baseUrl = "http://epico.gob.ec/vehiculo/public/api/";
-  HttpOptions = {
-    headers: new HttpHeaders({ 'Content-type': 'aplication/json' })
-  };
+  baseUrl = "https://epico.gob.ec/vehiculo/public/api/";
+ /*  HttpOptions = {
+    headers: new HttpHeaders({ 'Content-type': 'aplication/json' }),
+    
+  }; */
 
   //http://www.epico.gob.ec/vehiculo/public/api/
   // Todos vehiculos => GET vehiculos/
@@ -51,7 +52,7 @@ export class VehiculoService {
      body = vehiculos.anio ? body.set('anio', vehiculos.anio): body;
      body = vehiculos.calificacion ? body.set('calificacion', vehiculos.calificacion): body;
      body = vehiculos.foto ? body.set('foto', vehiculos.foto): body; */
-    return this.http.post<Respuesta>(this.baseUrl + "vehiculo/", vehiculo, this.HttpOptions);
+    return this.http.post<Respuesta>(this.baseUrl + "vehiculo/", vehiculo);
 
   }
 
@@ -60,7 +61,7 @@ export class VehiculoService {
   }
 
   actualizarVehiculo(vehiculo: Vehiculo, codigo: string) {
-    return this.http.put<Respuesta>(this.baseUrl + "vehiculo/" + codigo, vehiculo, this.HttpOptions);
+    return this.http.put<Respuesta>(this.baseUrl + "vehiculo/" + codigo, vehiculo /* this.HttpOptions */);
 
   }
   
