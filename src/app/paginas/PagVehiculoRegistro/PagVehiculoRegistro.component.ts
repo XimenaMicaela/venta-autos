@@ -27,7 +27,7 @@ export class PagVehiculoRegistroComponent implements OnInit {
       "anio": ['', [Validators.required]],
       "color": [],
       "kilometraje": ['', [Validators.required]],
-      "Precio": [],
+      "precio": [],
       "calificacion": ['', [Validators.required]]
 
     });
@@ -42,6 +42,8 @@ export class PagVehiculoRegistroComponent implements OnInit {
     this.vehiculoServicio.addvehiculo(vehiculo);
     console.log('Formulario' , this.formulario); */
     if (this.formulario.valid) {
+      console.log(this.formulario.value);
+      
       this.vehiculoService.insertVehiculo({ ...this.formulario.value }).subscribe(
         respuesta => {
           if (respuesta.codigo == '1') {

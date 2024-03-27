@@ -7,6 +7,6 @@ export interface Vehiculo {
     precio: number;
     foto: string | null;
     anio: number;
-    calificacion: Number;
+    calificacion: number;
     
 }
